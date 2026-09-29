@@ -49,13 +49,40 @@ class AspiradorTaula(Aspirador):
             (percepcio["Loc"], percepcio["Net"])
         ]
 
-
+#  Agent reflex simple: actua nom´es en funci´o de l’estat actual percebut (si la sala est`a bruta, neteja; si est`a neta, es mou).
 class AspiradorReflex(Aspirador):
     def actua(self, percepcio: dict):
-        """ TODO """
-
+        if not percepcio["Net"]:    # Si l'habitació on es troba és bruta, netejar-la
+            return "A"
+        else:
+            if percepcio["Loc"] == 0:
+                return "D"
+            else:
+                return "E"
 
 class AspiradorMemoria(Aspirador):
     def actua(self, percepcio: dict):
-        """ TODO """
+        # Inicialment no sabem com estan les habitacions
+        habitacions = {0: None, 1: None}
+
+        loc = percepcio["Loc"]
+        net = percepcio["Net"]
+
+        # Posició actual
+        habitacions[loc] = net
+
+        # Si la sala actual està bruta, s'ha d'aspirar
+        if not net:
+            habitacions[loc] = True
+            return "A"
+        
+        # Si sabem que totes dues estan netes, ens aturam
+        if habitacions[0] is True and habitacions[1] is True:
+            return "ATURA"
+        
+        # Si la sala actual està neta però l'altra no o encara no la coneixem, ens movem
+        if loc == 0:
+            return "D"
+        else:
+            return "E"
 

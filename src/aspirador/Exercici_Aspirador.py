@@ -50,7 +50,7 @@ class AspiradorNoG(joc.JocNoGrafic):
         # Acció de moure's: l'aspirador canvia d'habitació
         elif accio == "Moure":
             if self.posicio_aspirador == "esquerra":
-                self.posicio_aspirador == "dreta"
+                self.posicio_aspirador = "dreta"
             else:
                 self.posicio_aspirador = "esquerra"
 
